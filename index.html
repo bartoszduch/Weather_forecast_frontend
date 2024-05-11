@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather forecast</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Weather Forecast for the Next 7 Days</h1>
+        <form id="coordinates-form">
+            <input type="text" id="latitude" placeholder="Enter latitude" required>
+            <input type="text" id="longitude" placeholder="Enter longitude" required>
+            <button type="submit">Display weather data</button>
+        </form>
+        <div id='weather-table'>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Weather code</th>
+                        <th>Temp. min (°C)</th>
+                        <th>Temp. max (°C)</th>
+                        <th>Sunshine time (s)</th>
+                        <th>Energy (kWh)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js">
+    </script>
+
+</body>
+</html>
