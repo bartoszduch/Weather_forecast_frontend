@@ -11,16 +11,17 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    max-width: 700px; /* Maksymalna szerokość kontenera */
+    max-width: 850px; /* Maksymalna szerokość kontenera */
     margin: 0 auto; /* Wyśrodkowanie kontenera */
     background-color: #ffffff; /* Biały kolor tła dla kontenera */
     box-shadow: 0 0 20px rgba(0,0,0,0.1); /* Subtelny cień dla kontenera */
 }
 
 #weather-table {
-    width: 100%; /* Pełna szerokość kontenera */
-    margin: 20px 0; /* Odstępy od góry i dołu */
-    border-collapse: collapse;
+    width: 100%; /* Ensures the table takes full width of its container */
+    max-width: 100%; /* Prevents the table from extending beyond the viewport */
+    margin: 20px 0; /* Maintains vertical spacing */
+    border-collapse: collapse; /* Ensures borders between cells are merged */
     background-color: #00000086;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
@@ -28,16 +29,17 @@ body {
 }
 
 #weather-table th, #weather-table td {
-    border: 1px solid #ffffff;
-    padding: 10px;
-    background-color: #686868;
-    color: #ffffff;
+    border: 1px solid #ffffff; /* Gives a good contrast */
+    padding: 10px; /* Adequate spacing within cells */
+    background-color: #686868; /* Dark background for cells */
+    color: #ffffff; /* White text color for readability */
 }
 
 #weather-table th {
-    background-color: #a29b9bd4;
+    background-color: #a29b9bd4; /* Slightly lighter color for headers */
 }
 
 #weather-table th:hover, #weather-table td:hover {
-    background-color: #555555;
+    background-color: #555555; /* Hover effect for interactivity */
 }
+

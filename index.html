@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather forecast</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
@@ -15,26 +16,17 @@
             <input type="text" id="longitude" placeholder="Enter longitude" required>
             <button type="submit">Display weather data</button>
         </form>
-        <div id='weather-table'>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Weather code</th>
-                        <th>Temp. min (°C)</th>
-                        <th>Temp. max (°C)</th>
-                        <th>Sunshine time (s)</th>
-                        <th>Energy (kWh)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
+        <table id='weather-table'>
+            <thead>
+                <!-- Headers for each day will be appended here -->
+            </thead>
+            <tbody>
+                <!-- Weather data for each attribute across days will be appended here -->
+            </tbody>
+        </table>
     </div>
 
-    <script src="script.js">
-    </script>
+    <script src="script.js"></script>
 
 </body>
 </html>
