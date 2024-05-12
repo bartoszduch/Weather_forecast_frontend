@@ -1,12 +1,31 @@
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('coordinates-form');
+    const useLocationBtn = document.getElementById('use-location');
+
     form.addEventListener('submit', function(event) {
         event.preventDefault(); // Prevents the form's default action
+        submitCoordinates();
+    });
 
+    useLocationBtn.addEventListener('click', function() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                document.getElementById('latitude').value = position.coords.latitude.toFixed(2);
+                document.getElementById('longitude').value = position.coords.longitude.toFixed(2);
+                submitCoordinates(); // Automatically submit after filling coordinates
+            }, function(error) {
+                alert('Error: ' + error.message);
+            });
+        } else {
+            alert('Geolocation is not supported by this browser.');
+        }
+    });
+
+    function submitCoordinates() {
         const latitude = document.getElementById('latitude').value;
         const longitude = document.getElementById('longitude').value;
 
-        if (isNaN(latitude) || isNaN(longitude) || latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) {
+        if (!isValidCoordinates(latitude, longitude)) {
             alert('Please enter valid latitude (between -90 and 90) and longitude (between -180 and 180) values.');
             return; // Stop the function if validation fails
         }
@@ -19,44 +38,58 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 return response.json();
             })
-            .then(data => {
-                const table = document.getElementById('weather-table');
-                const thead = table.tHead;
-                thead.innerHTML = ''; // Clear previous header
-                const headerRow = document.createElement('tr');
-                thead.appendChild(headerRow);
-
-                const tbody = table.tBodies[0];
-                tbody.innerHTML = ''; // Clears previous data
-
-                const fields = ['date', 'weather_code', 'temperature_min', 'temperature_max', 'sunshine_duration', 'energy'];
-                
-                // Create headers and rows for each field
-                fields.forEach(field => {
-                    const row = document.createElement('tr');
-                    tbody.appendChild(row);
-                });
-
-                data.forEach((dayData, dayIndex) => {
-                    const dateHeader = document.createElement('th');
-                
-
-                    fields.forEach((field, index) => {
-                        const cell = document.createElement('td');
-                        if (field === 'weather_code') {
-                            const icon = document.createElement('i');
-                            const iconClass = weatherCodeToIcon(dayData[field]) || 'fa-sun'; // Default to 'sun' icon
-                            icon.className = `fas ${iconClass}`;
-                            cell.appendChild(icon);
-                        } else {
-                            cell.textContent = dayData[field];
-                        }
-                        tbody.rows[index].appendChild(cell);
-                    });
-                });
-            })
+            .then(updateWeatherTable)
             .catch(error => console.error('There was a problem with the fetch operation:', error));
-    });
+    }
+
+    function isValidCoordinates(lat, lon) {
+        return !isNaN(lat) && !isNaN(lon) && lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180;
+    }
+
+    function updateWeatherTable(data) {
+        const table = document.getElementById('weather-table');
+        const thead = table.tHead;
+        thead.innerHTML = '';
+        const headerRow = document.createElement('tr');
+        // Dodajemy tylko jeden nagłówek z zazwą date
+        const dateHeader = document.createElement('th');
+        dateHeader.textContent = "Date";
+        headerRow.appendChild(dateHeader);
+
+        // Dodajemy nagłówki dla każdego dnia
+        data.forEach((dayData) => {
+            const dateHeader = document.createElement('th');
+            dateHeader.textContent = dayData.date;
+            headerRow.appendChild(dateHeader);
+        });
+        thead.appendChild(headerRow);
+    
+        const tbody = table.tBodies[0];
+        tbody.innerHTML = '';
+    
+        const fields = ['weather_code', 'temperature_min', 'temperature_max', 'sunshine_duration', 'energy']; // Usunięto 'date'
+        fields.forEach(field => {
+            const row = document.createElement('tr');
+            const fieldName = document.createElement('td');
+            fieldName.textContent = field.replace('_', ' ').toUpperCase();
+            row.appendChild(fieldName);
+            tbody.appendChild(row);
+    
+            data.forEach((dayData) => {
+                const cell = document.createElement('td');
+                if (field === 'weather_code') {
+                    const icon = document.createElement('i');
+                    const iconClass = weatherCodeToIcon(dayData[field]) || 'fa-sun';
+                    icon.className = `fas ${iconClass}`;
+                    cell.appendChild(icon);
+                } else {
+                    cell.textContent = dayData[field];
+                }
+                row.appendChild(cell);
+            });
+        });
+    }
+    
 });
 
 // Helper function to map weather codes to Font Awesome icons
@@ -90,7 +123,8 @@ function weatherCodeToIcon(code) {
         '95': 'fa-bolt',               // Slight/moderate thunderstorm
         '96': 'fa-bolt',               // Thunderstorm with light hail
         '99': 'fa-bolt'                // Thunderstorm with heavy hail
+    
     };
-    return map[code];
+    return map[code] || 'fa-question'; // Default to 'question' icon if code not found
 }
 
