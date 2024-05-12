@@ -12,7 +12,7 @@
     <section>
         <h2>Description</h2>
         <p>https://bartoszduch.github.io/Codibly_frontend/
-            The Weather Forecast Application is a web-based tool that displays weather forecasts for the next 7 days, either based on user-entered geographical coordinates or using the user's current location provided by geolocation services.
+        The Weather Forecast Application is a web-based tool that displays weather forecasts for the next 7 days, either based on user-entered geographical coordinates or using the user's current location provided by geolocation services.
         The backend of this application is hosted by Render, which ensures performance, reliability and ease of management and deployment. Thanks to Render, we can focus on developing functionality without worrying about infrastructure.</p>
     </section>
     <section>
