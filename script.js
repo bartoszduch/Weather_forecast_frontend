@@ -29,7 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Please enter valid latitude (between -90 and 90) and longitude (between -180 and 180) values.');
             return; 
         }
-        const url = `http://127.0.0.1:5000/weather?latitude=${latitude}&longitude=${longitude}`;
+        const url = `https://codibly-1.onrender.com/weather?latitude=${latitude}&longitude=${longitude}`;
+
 
         fetch(url)
             .then(response => {
