@@ -7,7 +7,7 @@
 </head>
 <body>
     <header>
-        <h1>Weather Forecast Application for Codibly</h1>
+        <h1>Weather Forecast Application for Codibly - FRONTEND</h1>
     </header>
     <section>
         <h2>Description</h2>
