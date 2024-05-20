@@ -29,18 +29,25 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Please enter valid latitude (between -90 and 90) and longitude (between -180 and 180) values.');
             return; 
         }
+        loadingDiv.style.display = 'block'; // Pokazujemy komunikat ładowania
         const url = `https://codibly-1.onrender.com/weather?latitude=${latitude}&longitude=${longitude}`;
 
-
+        
         fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(updateWeatherTable)
-            .catch(error => console.error('There was a problem with the fetch operation:', error));
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            updateWeatherTable(data);
+            loadingDiv.style.display = 'none'; // Ukrywamy komunikat ładowania
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+            loadingDiv.style.display = 'none'; // Ukrywamy komunikat ładowania w przypadku błędu
+        });
     }
 
     function isValidCoordinates(lat, lon) {
